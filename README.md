@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # aitest-mini-web
 
 > A Vue.js project
@@ -19,3 +20,6 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+=======
+# aitest-mini-web
+>>>>>>> e79f2ccb9da21b181850d05c436053211c633bd0

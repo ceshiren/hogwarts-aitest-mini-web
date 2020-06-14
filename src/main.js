@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import api from './api/api'
 
+Vue.prototype.$api = api
 Vue.config.productionTip = false
 Vue.use(Vuetify)
 /* eslint-disable no-new */

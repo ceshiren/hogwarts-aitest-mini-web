@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-var api = process.env.API
+var api = 'http://127.0.0.1'
 
 var instance = axios.create({
     headers:{

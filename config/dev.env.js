@@ -4,5 +4,5 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  API:'127.0.0.1'
+  API:'http://aitest.testing-studio.com:8089/'
 })

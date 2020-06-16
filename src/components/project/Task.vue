@@ -41,12 +41,29 @@ export default {
             ]
         }
     },
+
+    created(){
+        
+        let params = {
+            pageNum:1,
+            pageSize:10,
+        }
+        this.$api.project.getTaskList(params).then(res=>{
+            console.log(res)
+            this.tableData = res.data.data
+        })
+    },
     methods:{
         doTask(item){
 
         },
         deleteTask(item){
-
+            let params = {
+                id:item.id
+            }
+            this.$api.project.deleteTask(params).them(res=>{
+                
+            })
         }
     }
 }

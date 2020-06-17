@@ -28,8 +28,9 @@ export default {
             this.$api.user.signIn(params).then(res=>{
                 console.log(res)
                 if(res.data.resultCode==1){
+                    console.log(res.data.data.token)
                     localStorage.setItem('token',res.data.data.token)
-                    console.log(localStorage.getItem('token'))
+                    console.log("更新后"+localStorage.getItem('token'))
                     this.$router.push({name:'Jenkins'})
                 }
                 else{

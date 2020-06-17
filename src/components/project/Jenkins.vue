@@ -23,6 +23,7 @@
                     <v-text-field v-model="gitURL" label="git地址"></v-text-field>
                     <v-text-field v-mode    l="gitBranch" label="git分支"></v-text-field>
                     <v-text-field v-model="remark" label="备注"></v-text-field>
+                    <v-checkbox v-model="defaultJenkinsFlag" label="默认"></v-checkbox>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -59,6 +60,7 @@
 export default {
     data(){
         return {
+            defaultJenkinsFlag:'',
             editDialog:false,
             editId:'',
             addDialog:false,
@@ -124,7 +126,8 @@ export default {
                 remark:this.remark,
                 testCommand:this.jenkinsCommand,
                 url:this.jenkinsURL,
-                userName:this.jenkinsUsername
+                userName:this.jenkinsUsername,
+                defaultJenkinsFlag:this.defaultJenkinsFlag?1:0
             }
 
             this.$api.project.editJenkins(params).then(res=>{

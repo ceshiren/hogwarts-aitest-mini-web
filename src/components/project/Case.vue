@@ -21,7 +21,7 @@ export default {
     data(){
         return {
             instanceNotify:'',
-            taskName:'',
+            taskName:'任务',
             remark:'',
             selected:[],
             headers:[
@@ -72,8 +72,8 @@ export default {
             }
 
             let params = {
-                casesIdList:casesId,
-                teskTask:{
+                caseIdList:casesId,
+                testTask:{
                     name:this.taskName,
                     remark:this.remark
                 }

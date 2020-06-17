@@ -42,6 +42,11 @@ export default new Router({
           path:'task',
           name:'Task',
           component:resolve=>require(["@/components/project/Task"],resolve)
+        },
+        {
+          path:'report',
+          name:'Report',
+          component:resolve=>require(["@/components/project/Report"],resolve)
         }
       ]
     }

@@ -21,7 +21,7 @@
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
                     <v-text-field v-model="jenkinsPassword" label="jenkins密码"></v-text-field>
                     <v-text-field v-model="gitURL" label="git地址"></v-text-field>
-                    <v-text-field v-model="gitBranch" label="git分支"></v-text-field>
+                    <v-text-field v-mode    l="gitBranch" label="git分支"></v-text-field>
                     <v-text-field v-model="remark" label="备注"></v-text-field>
                 </v-card-text>
                 <v-card-actions>

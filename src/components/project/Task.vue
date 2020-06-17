@@ -1,5 +1,16 @@
 <template>
     <div style="margin:20px">
+        <v-dialog v-model="taskDialog">
+            <v-card>
+                <v-card-title>
+
+                </v-card-title>
+                <v-card-text>
+                    
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
         <v-data-table
         :headers="headers"
         :items="tableData"
@@ -43,17 +54,19 @@ export default {
     },
 
     created(){
-        
-        let params = {
-            pageNum:1,
-            pageSize:10,
-        }
-        this.$api.project.getTaskList(params).then(res=>{
-            console.log(res)
-            this.tableData = res.data.data
-        })
+        this.getTaskList()
     },
     methods:{
+        getTaskList(){
+            let params = {
+                pageNum:1,
+                pageSize:10,
+            }
+            this.$api.project.getTaskList(params).then(res=>{
+                console.log(res)
+                this.tableData = res.data.data.data
+            })
+        },
         doTask(item){
 
         },
@@ -61,7 +74,7 @@ export default {
             let params = {
                 id:item.id
             }
-            this.$api.project.deleteTask(params).them(res=>{
+            this.$api.project.deleteTask(params).then(res=>{
                 
             })
         }

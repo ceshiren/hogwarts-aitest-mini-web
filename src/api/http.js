@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-var api = "http://aitest.testing-studio.com:8089/"
+// var api = "http://aitest.testing-studio.com:8089/"
+var api = "http://127.0.0.1:8093/"
 
 var instance = axios.create({
     headers:{

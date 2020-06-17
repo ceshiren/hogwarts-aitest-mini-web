@@ -1,6 +1,9 @@
 import axios from './http'
 
 const project = {
+    createCase(params){
+        return axios.post('/user/createCase',params)
+    },
     getProjectInfo(params){
         return axios.get('/peoject',{params})
     },
@@ -29,7 +32,7 @@ const project = {
         return axios.post('/task',params)
     },
     deleteTask(params){
-        return axios.delete('/task',params)
+        return axios.delete('/task/start',params)
     },
     getTaskList(params){
         return axios.get('/task/list',{params})

@@ -6,8 +6,10 @@
                 <v-tab @click="$router.push('jenkins')">jenkins管理</v-tab>
                 <v-tab @click="$router.push('case')">用例管理</v-tab>
                 <v-tab @click="$router.push({name:'Task'})">任务管理</v-tab>
-                <v-tab>报告管理</v-tab>
+                <v-tab @click="$router.push({name:'Report'})">报告管理</v-tab>
             </v-tabs>
+            
+            <v-spacer></v-spacer>
         </v-app-bar>  
         <router-view></router-view>
     </div>

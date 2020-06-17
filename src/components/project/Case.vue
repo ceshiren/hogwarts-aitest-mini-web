@@ -1,6 +1,6 @@
 <template>
     <div style="margin:20px">
-        <v-btn color="success">导入用例</v-btn>
+        <v-btn color="success" @click="createCase()">导入用例</v-btn>
         <v-btn color="primary" @click="addTask()">生成任务</v-btn>
         <v-data-table 
         v-model="selected" 
@@ -20,6 +20,7 @@
 export default {
     data(){
         return {
+            instanceNotify:'',
             taskName:'',
             remark:'',
             selected:[],
@@ -35,16 +36,35 @@ export default {
         }
     },
     created(){
-        let params = {
-            pageNum:1,
-            pageSize:10,
-        }
-        this.$api.project.getCase(params).then(res=>{
-            console.log(res)
-            this.tableData = res.data.data
-        })
+        this.getCaseList()
     },
     methods:{
+        createCase(){
+            this.$api.project.createCase().then(res=>{
+                if(res.data.resulCose==1){
+                    if(this.instanceNotify){
+                        this.instanceNotify.close
+                    }
+                    this.instanceNotify = this.$notify({
+                        title:'成功',
+                        message:'生成成功',
+                        type:'success'
+                    })
+                    this.close()
+                }
+            })
+        },
+        getCaseList(){
+            
+            let params = {
+                pageNum:1,
+                pageSize:10,
+            }
+            this.$api.project.getCase(params).then(res=>{
+                console.log(res)
+                this.tableData = res.data.data.data
+            })
+        },
         addTask(){
             let casesId = []
             for(let i=0;i<this.selected.length;i++){
@@ -75,14 +95,7 @@ export default {
             }
             this.$api.project.deleteCase(params).then(res=>{
                 if(res.data.resultCode==1){
-                    let params = {
-                        pageNum:1,
-                        pageSize:10,
-                    }
-                    this.$api.project.getCase(params).then(res=>{
-                        console.log(res)
-                        this.tableData = res.data.data
-                    })
+                    this.getCaseList()
                 }
             })
         }

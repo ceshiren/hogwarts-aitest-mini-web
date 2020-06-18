@@ -76,7 +76,7 @@ export default {
             this.$api.project.doTask(params).then(res=>{
                 if(res.data.resultCode==1){
                     if(this.instanceNotify){
-                        this.instanceNotify.close
+                        this.instanceNotify.close()
                     }
                     this.instanceNotify = this.$notify({
                         title:'成功',
@@ -93,7 +93,7 @@ export default {
             this.$api.project.deleteTask(params).then(res=>{
                 if(res.data.resultCode==1){
                     if(this.instanceNotify){
-                        this.instanceNotify.close
+                        this.instanceNotify.close()
                     }
                     this.instanceNotify = this.$notify({
                         title:'成功',

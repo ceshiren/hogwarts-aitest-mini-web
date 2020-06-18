@@ -60,7 +60,7 @@ export default {
             this.$api.project.createCase().then(res=>{
                 if(res.data.resulCose==1){
                     if(this.instanceNotify){
-                        this.instanceNotify.close
+                        this.instanceNotify.close()
                     }
                     this.instanceNotify = this.$notify({
                         title:'成功',

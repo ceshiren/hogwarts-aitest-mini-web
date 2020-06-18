@@ -20,6 +20,7 @@
 export default {
     data(){
         return {
+            instanceNotify:'',
             message:'注册成功',
             snackbar:false,
             username:'',
@@ -43,8 +44,16 @@ export default {
                         message:'注册成功',
                         type:'success'
                     })
+                    this.$router.push({name:'SignIn'})
+                }else{
+                    if(this.instanceNotify){
+                        this.instanceNotify.close()
+                    }
+                    this.instanceNotify = this.$notify({
+                        message:res.data.message,
+                        type:'error'
+                    })
                 }
-                this.$router.push({name:'SignIn'})
             })
         }
     }

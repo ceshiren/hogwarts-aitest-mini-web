@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 // var api = "http://aitest.testing-studio.com:8089/"
-var api = "http://127.0.0.1:8093/"
+// var api = "http://127.0.0.1:8093/"
+var api = process.env.API
 
 var instance = axios.create({
     headers:{
@@ -19,13 +20,6 @@ instance.interceptors.request.use(config=>{
         config.headers.common['token'] = localStorage.getItem('token')
     }
     return config
-},error=>{
-    console.log(error)
-    if (messageInstance) {
-        messageInstance.close();
-      }
-      messageInstance = Message.error({message:'请求出现错误！'})
-    return Promise.reject(error)
 })
 
 export default instance;

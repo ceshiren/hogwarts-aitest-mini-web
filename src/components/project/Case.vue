@@ -2,7 +2,7 @@
     <div style="margin:20px">
         <v-btn color="success" @click="createCase()">导入用例</v-btn>
         <v-btn color="primary" @click="taskDialog=true">生成任务</v-btn>
-        <v-dialog v-model="taskDialog">
+        <v-dialog v-model="taskDialog" width="400px">
             <v-card>
                 <v-card-title>
                     生成任务

@@ -31,7 +31,9 @@
             </template>
             
             <template v-slot:item.action="{item}">
-                <v-btn color="primary" small @click="doTask(item)">执行任务</v-btn>
+                <v-btn v-if="item.status==1" color="primary" small @click="doTask(item)">执行任务</v-btn>
+
+                <v-btn small v-else disabled>执行任务</v-btn>
                 <v-btn color="success" small @click="editTask(item)">编辑</v-btn>
                 <v-btn color="error" small @click="deleteTask(item)">删除</v-btn>
             </template>

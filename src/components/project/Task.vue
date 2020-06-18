@@ -36,6 +36,7 @@
                 <v-btn color="error" small @click="deleteTask(item)">删除</v-btn>
             </template>
         </v-data-table>
+        <v-pagination v-if="pageLength>0" v-model="currentPage" :length="pageLength" @input="getTaskList()" total-visible="7"></v-pagination>
     </div>
 </template>
 
@@ -43,6 +44,9 @@
 export default {
     data(){
         return {
+            currentPage:1,
+            pageLength:0,
+            rows:'',
             editDialog:false,
             editId:'',
             taskName:'',
@@ -107,12 +111,14 @@ export default {
         },
         getTaskList(){
             let params = {
-                pageNum:1,
+                pageNum:this.currentPage,
                 pageSize:10,
             }
             this.$api.project.getTaskList(params).then(res=>{
                 console.log(res)
                 this.tableData = res.data.data.data
+                this.rows = res.data.data.recordsTotal
+                this.pageLength = Math.ceil(this.rows/10)
             })
         },
         doTask(item){

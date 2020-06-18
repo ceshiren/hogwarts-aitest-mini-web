@@ -30,6 +30,7 @@
                 <v-btn small color="error" @click="deleteItem(item)">删除</v-btn>
             </template>
         </v-data-table>
+        <v-pagination v-if="pageLength>0" v-model="currentPage" :length="pageLength" @input="getCaseList()" total-visible="7"></v-pagination>
     </div>
 </template>
 
@@ -37,6 +38,9 @@
 export default {
     data(){
         return {
+            currentPage:1,
+            pageLength:0,
+            rows:'',
             taskName:'',
             taskDialog:'',
             instanceNotify:'',
@@ -59,7 +63,7 @@ export default {
     methods:{
         createCase(){
             this.$api.project.createCase().then(res=>{
-                if(res.data.resulCose==1){
+                console.log(res)
                     if(this.instanceNotify){
                         this.instanceNotify.close()
                     }
@@ -70,18 +74,19 @@ export default {
                     })
                     this.$router.push({name:'Task'})
                     this.close()
-                }
             })
         },
         getCaseList(){
             
             let params = {
-                pageNum:1,
+                pageNum:this.currentPage,
                 pageSize:10,
             }
             this.$api.project.getCase(params).then(res=>{
                 console.log(res)
                 this.tableData = res.data.data.data
+                this.rows = res.data.data.recordsTotal
+                this.pageLength = Math.ceil(this.rows/10)
             })
         },
         addTask(){

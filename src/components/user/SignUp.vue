@@ -45,14 +45,6 @@ export default {
                         type:'success'
                     })
                     this.$router.push({name:'SignIn'})
-                }else{
-                    if(this.instanceNotify){
-                        this.instanceNotify.close()
-                    }
-                    this.instanceNotify = this.$notify({
-                        message:res.data.message,
-                        type:'error'
-                    })
                 }
             })
         }

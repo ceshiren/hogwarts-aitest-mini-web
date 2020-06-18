@@ -39,6 +39,9 @@ const project = {
     },
     doTask(params){
         return axios.post('/task/start',params)
+    },
+    editTask(params){
+        return axios.put('/task',params)
     }
 }
 

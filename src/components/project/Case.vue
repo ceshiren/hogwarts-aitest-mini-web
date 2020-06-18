@@ -9,6 +9,7 @@
                 </v-card-title>
                 <v-card-text>
                     <v-text-field label="任务名称" v-model="taskName"></v-text-field>
+                    <v-text-field label="备注" v-model="remark"></v-text-field>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer>
@@ -67,6 +68,7 @@ export default {
                         message:'生成成功',
                         type:'success'
                     })
+                    this.$router.push({name:'Task'})
                     this.close()
                 }
             })
@@ -102,6 +104,7 @@ export default {
                         message:'生成成功',
                         type:'success'
                     })
+                    this.$router.push({name:'Task'})
                     this.close()
                 }
             })

@@ -3,6 +3,9 @@
         <v-col cols="6">
             <div id="myChart" style="width: 100%; height: 300px"></div>
         </v-col>
+        <v-col cols="6">
+            <div id="pie" style="width: 100%; height: 300px"></div>
+        </v-col>
     </v-row>
 </template>
 
@@ -10,50 +13,55 @@
 export default {
     data(){
         return {
-            
-            chartData:{
-                xAxis:["构建号1","构建号2","构建号3","构建号4","构建号5","构建号6","构建号7"],
-                success:[5,15,18,20,17,20,16],
-                fail:[2,3,1,1,5,6,7,],
-                broken:[6,4,10,13,6,8,11]
-            },
-            
-            myChartData:{
-                xAxis:["构建号1","构建号2","构建号3","构建号4","构建号5","构建号6","构建号7"],
-                success:[5,15,18,20,17,20,16],
-                fail:[2,3,1,1,5,6,7,],
-                broken:[6,4,10,13,6,8,11]
-            },
+            countX:[],
+            coutnData:[],
+            statusX:[],
+            statusData:[],
         }
     },
     created() {
-        this.$api.project.getTaskList().then(res=>{
-
-            this.drawChart()  
+        this.$api.report.getCaseCount().then(res=>{
+            var listData = []
+            listData = res.data.data
+            for(let i=0;i<listData.length;i++){
+                this.countX.push("任务id:"+listData[i].id)
+                this.coutnData.push(listData[i].caseConut)
+            }
+            this.drawChart()
+        })
+        this.$api.report.getStatus().then(res=>{
+            console.log("状态")
+            console.log(res)
+            var listData = res.data.data.taskDataDtoList
+            console.log(listData)
+            
+            for(let i=0;i<listData.length;i++){
+                this.statusX.push(listData[i].desc)
+                this.statusData.push({value:listData[i].taskCount,name:listData[i].desc})
+            }
+            this.drawPie()
         })
     },
 
     methods: {
-        drawChart(){
+        drawPie(){
+
             var myEcharts = require('echarts');
-            var myChart = myEcharts.init(document.getElementById("myChart"));
+            var myChart = myEcharts.init(document.getElementById("pie"));
             myChart.setOption({
-                color: ['#FF3300','#FFCC33','#66CC00','#707070','#CC0099'],
-                title: {
-                    text: '状态'
-                },
+
                 tooltip: {
                     trigger: 'item',
                     formatter: '{a} <br/>{b}: {c} ({d}%)'
                 },
                 legend: {
                     orient: 'vertical',
-                    right: 10,
-                    data: ['failed', 'broken', 'passed', 'skipped', 'unknow']
+                    left: 10,
+                    data: this.statusData
                 },
                 series: [
                     {
-                        name: '执行状态',
+                        name: '任务类型统计',
                         type: 'pie',
                         radius: ['50%', '70%'],
                         avoidLabelOverlap: false,
@@ -64,22 +72,36 @@ export default {
                         emphasis: {
                             label: {
                                 show: true,
-                                fontSize: '30',
+                                fontSize: '20',
                                 fontWeight: 'bold'
                             }
                         },
                         labelLine: {
                             show: false
                         },
-                        data: [
-                            {value:'5',name:'failed'},
-                            {value:'6',name:'broken'},
-                            {value:'9',name:'passed'},
-                            {value:'0',name:'skipped'},
-                            {value:'0',name:'unknow'},
-                        ]
+                        data: this.statusData
                     }
                 ]
+            })
+        },
+        drawChart(){
+            var myEcharts = require('echarts');
+            var myChart = myEcharts.init(document.getElementById("myChart"));
+            myChart.setOption({
+                title:{
+                    text:'测试任务用例数量统计'
+                },
+                xAxis: {
+                    type: 'category',
+                    data: this.countX
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: this.coutnData,
+                    type: 'line'
+                }]
             });
         }
     },

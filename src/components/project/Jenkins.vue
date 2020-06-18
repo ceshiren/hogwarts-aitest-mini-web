@@ -16,12 +16,12 @@
                 <v-card-title>编辑jenkins</v-card-title>
                 <v-card-text>
                     <v-text-field v-model="jenkinsName" label="jenkins名称"></v-text-field>
-                    <v-text-field v-model="jenkinsCommand" label="Jenkins命令"></v-text-field>
+                    <v-text-field v-model="jenkinsCommand" label="测试命令标识"></v-text-field>
                     <v-text-field v-model="jenkinsURL" label="jenkins地址"></v-text-field>
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
                     <v-text-field v-model="jenkinsPassword" label="jenkins密码"></v-text-field>
                     <v-text-field v-model="gitURL" label="git地址"></v-text-field>
-                    <v-text-field v-mode    l="gitBranch" label="git分支"></v-text-field>
+                    <v-text-field v-model="gitBranch" label="git分支"></v-text-field>
                     <v-text-field v-model="remark" label="备注"></v-text-field>
                     <v-checkbox v-model="defaultJenkinsFlag" label="默认"></v-checkbox>
                 </v-card-text>
@@ -38,13 +38,14 @@
                 <v-card-title>添加Jenkins</v-card-title>
                 <v-card-text>
                     <v-text-field v-model="jenkinsName" label="jenkins名称"></v-text-field>
-                    <v-text-field v-model="jenkinsCommand" label="Jenkins命令"></v-text-field>
+                    <v-text-field v-model="jenkinsCommand" label="测试命令标识"></v-text-field>
                     <v-text-field v-model="jenkinsURL" label="jenkins地址"></v-text-field>
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
-                    <v-text-field v-model="jenkinsPassword" label="jenkins密码"></v-text-field>
+                    <v-text-field v-model="jenkinsPassword" type="password" label="jenkins密码"></v-text-field>
                     <v-text-field v-model="gitURL" label="git地址"></v-text-field>
                     <v-text-field v-model="gitBranch" label="git分支"></v-text-field>
                     <v-text-field v-model="remark" label="备注"></v-text-field>
+                    <v-checkbox v-model="defaultJenkinsFlag" label="默认"></v-checkbox>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -103,6 +104,7 @@ export default {
             this.jenkinsUsername = item.userName
             this.jenkinsPassword = item.password
             this.editId = item.id
+            this.remark = item.remark
             this.editDialog = true
         },
         deleteJenkins(item){
@@ -122,7 +124,7 @@ export default {
                 gitBranch:this.gitBranch,
                 gitUrl:this.gitURL,
                 name:this.jenkinsName,
-                password:this.password,
+                password:this.jenkinsPassword,
                 remark:this.remark,
                 testCommand:this.jenkinsCommand,
                 url:this.jenkinsURL,
@@ -132,10 +134,8 @@ export default {
 
             this.$api.project.editJenkins(params).then(res=>{
                 console.log(res)
-                if(res.data.resultCode==1){
                     this.getJenkinsList()
                     this.close()
-                }
             })
         },
         saveJenkins(){
@@ -144,19 +144,18 @@ export default {
                 gitBranch:this.gitBranch,
                 gitUrl:this.gitURL,
                 name:this.jenkinsName,
-                password:this.password,
+                password:this.jenkinsPassword,
                 remark:this.remark,
                 testCommand:this.jenkinsCommand,
                 url:this.jenkinsURL,
-                userName:this.jenkinsUsername
+                userName:this.jenkinsUsername,
+                defaultJenkinsFlag:this.defaultJenkinsFlag?1:0
             }
 
             this.$api.project.addJenkins(params).then(res=>{
                 console.log(res)
-                if(this.data.resultCode==1){
                     this.getJenkinsList()
                     this.close()
-                }
             })
         },
         close(){

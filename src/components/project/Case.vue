@@ -1,7 +1,23 @@
 <template>
     <div style="margin:20px">
         <v-btn color="success" @click="createCase()">导入用例</v-btn>
-        <v-btn color="primary" @click="addTask()">生成任务</v-btn>
+        <v-btn color="primary" @click="taskDialog=true">生成任务</v-btn>
+        <v-dialog v-model="taskDialog">
+            <v-card>
+                <v-card-title>
+                    生成任务
+                </v-card-title>
+                <v-card-text>
+                    <v-text-field label="任务名称" v-model="taskName"></v-text-field>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer>
+                        <v-btn color="primary" @click="addTask()">确认</v-btn>
+                    </v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+
         <v-data-table 
         v-model="selected" 
         :headers="headers" 
@@ -20,8 +36,9 @@
 export default {
     data(){
         return {
+            taskName:'',
+            taskDialog:'',
             instanceNotify:'',
-            taskName:'任务',
             remark:'',
             selected:[],
             headers:[
@@ -98,6 +115,9 @@ export default {
                     this.getCaseList()
                 }
             })
+        },
+        close(){
+            this.taskDialog = false
         }
     }
 }

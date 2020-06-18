@@ -1,7 +1,6 @@
 <template>
     <v-row>
         <v-col cols="6">
-            <h1>aaa</h1>
             <div id="myChart" style="width: 100%; height: 300px"></div>
         </v-col>
     </v-row>
@@ -39,59 +38,47 @@ export default {
             var myEcharts = require('echarts');
             var myChart = myEcharts.init(document.getElementById("myChart"));
             myChart.setOption({
-                title:{
-                    text:"测试趋势图"
+                color: ['#FF3300','#FFCC33','#66CC00','#707070','#CC0099'],
+                title: {
+                    text: '状态'
                 },
-                tooltip:{
-                    trigger: "axis",
-                    axisPointer: {
-                        type: "cross",
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    right: 10,
+                    data: ['failed', 'broken', 'passed', 'skipped', 'unknow']
+                },
+                series: [
+                    {
+                        name: '执行状态',
+                        type: 'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
                         label: {
-                            backgroundColor: "#6a7985"
-                        }
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: [
+                            {value:'5',name:'failed'},
+                            {value:'6',name:'broken'},
+                            {value:'9',name:'passed'},
+                            {value:'0',name:'skipped'},
+                            {value:'0',name:'unknow'},
+                        ]
                     }
-                },
-                legend:{
-                    
-                },
-                xAxis: {
-                    data: this.chartData.xAxis
-                },
-                yAxis: {
-                    type:'value'
-                },
-                series:[
-                    {
-                        name:"失败",
-                        type:"line",
-                        data:this.chartData.fail,
-                        areaStyle:{},
-                        stack:"总量",
-                        itemStyle:{
-                            color:"#FD735C"
-                        }
-                    },
-                    {
-                        name:"broken",
-                        type:"line",
-                        data:this.chartData.broken,
-                        areaStyle:{},
-                        stack:"总量",
-                        itemStyle:{
-                            color:"#FFD76B"
-                        }
-                    },
-                    {
-                        name:"成功",
-                        type:"line",
-                        data:this.chartData.success,
-                        areaStyle:{},
-                        stack:"总量",
-                        itemStyle:{
-                            color:"#9DD167"
-                        }
-                    },
-
                 ]
             });
         }

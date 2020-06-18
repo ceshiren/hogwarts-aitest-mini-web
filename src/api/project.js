@@ -29,13 +29,16 @@ const project = {
         return axios.delete('/testCase/'+params.id)
     },
     addTask(params){
-        return axios.post('/task',params)
+        return axios.post('/task/',params)
     },
     deleteTask(params){
-        return axios.delete('/task/start',params)
+        return axios.delete('/task/'+ params.id,params)
     },
     getTaskList(params){
         return axios.get('/task/list',{params})
+    },
+    doTask(params){
+        return axios.post('/task/start',params)
     }
 }
 

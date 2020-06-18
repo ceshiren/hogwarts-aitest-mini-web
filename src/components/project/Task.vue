@@ -6,7 +6,7 @@
 
                 </v-card-title>
                 <v-card-text>
-                    
+
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -14,6 +14,7 @@
         <v-data-table
         :headers="headers"
         :items="tableData"
+        hide-default-footer
         >
             <template v-slot:item.status="{item}">
                 <div v-if="item.status==0">无效</div>
@@ -25,7 +26,6 @@
             <template v-slot:item.action="{item}">
                 <v-btn color="primary" small @click="doTask(item)">执行任务</v-btn>
                 <v-btn color="error" small @click="deleteTask(item)">删除</v-btn>
-                <v-btn color="success" small>查看报告</v-btn>
             </template>
         </v-data-table>
     </div>
@@ -35,6 +35,8 @@
 export default {
     data(){
         return {
+            taskDialog:'',
+            instanceNotify:'',
             headers:[
                 {text:'id',value:'id'},
                 {text:'名称',value:'name'},
@@ -68,14 +70,38 @@ export default {
             })
         },
         doTask(item){
-
+            let params = {
+                id:item.id
+            }
+            this.$api.project.doTask(params).then(res=>{
+                if(res.data.resultCode==1){
+                    if(this.instanceNotify){
+                        this.instanceNotify.close
+                    }
+                    this.instanceNotify = this.$notify({
+                        title:'成功',
+                        message:'执行成功',
+                        type:'success'
+                    })
+                }
+            })
         },
         deleteTask(item){
             let params = {
                 id:item.id
             }
             this.$api.project.deleteTask(params).then(res=>{
-                
+                if(res.data.resultCode==1){
+                    if(this.instanceNotify){
+                        this.instanceNotify.close
+                    }
+                    this.instanceNotify = this.$notify({
+                        title:'成功',
+                        message:'删除成功',
+                        type:'success',
+                    })
+                    this.getTaskList()
+                }
             })
         }
     }

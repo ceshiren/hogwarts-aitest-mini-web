@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {Message} from 'element-ui'
+import router from '../router'
 // var api = "http://aitest.testing-studio.com:8089/"
 // var api = "http://127.0.0.1:8093/"
 var api = process.env.API
@@ -46,6 +47,15 @@ instance.interceptors.response.use(res=>{
             type:'error',
             message:error.data.message
         })
+        if(error.status==401||error.status==403){
+            router.replace({
+                
+                path:'/',
+                query:{
+                    redirect:router.currentRoute.fullPath
+                }
+            })
+        }
     }
 )
 

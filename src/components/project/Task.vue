@@ -103,6 +103,7 @@ export default {
                     type:'success',
                 })
                 this.getTaskList()
+                this.close()
             })
         },
         editTask(item){

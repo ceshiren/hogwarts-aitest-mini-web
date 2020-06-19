@@ -126,7 +126,7 @@ export default {
         },
         doTask(item){
             let params = {
-                id:item.id
+                taskId:item.id
             }
             this.$api.project.doTask(params).then(res=>{
                 if(res.data.resultCode==1){

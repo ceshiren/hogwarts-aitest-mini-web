@@ -2,8 +2,8 @@ import axios from 'axios'
 import {Message} from 'element-ui'
 import router from '../router'
 // var api = "http://aitest.testing-studio.com:8089/"
-var api = "http://127.0.0.1:8093/"
-// var api = process.env.API
+// var api = "http://127.0.0.1:8093/"
+var api = process.env.API
 var messageInstance = null
 var instance = axios.create({
     headers:{

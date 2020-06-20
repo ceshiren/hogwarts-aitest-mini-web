@@ -150,6 +150,7 @@ export default {
             }
             this.$api.project.doTask(params).then(res=>{
                 if(res.data.resultCode==1){
+                    this.getTaskList()
                     if(this.instanceNotify){
                         this.instanceNotify.close()
                     }

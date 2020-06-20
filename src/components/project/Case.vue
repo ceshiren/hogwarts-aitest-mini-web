@@ -47,9 +47,10 @@ export default {
             remark:'',
             selected:[],
             headers:[
+                {text:'id',value:'id'},
                 {text:'标识',value:'caseSign'},
                 {text:'包名',value:'packageName'},
-                {text:'类名',value:'className   '},
+                {text:'类名',value:'className'},
                 {text:'方法名',value:'methodName'},
                 {text:'操作',value:'action'}
             ],

@@ -1,6 +1,38 @@
 <template>
     <div style="margin:20px">
-        <v-btn color="success" @click="createCase()">导入用例</v-btn>
+        <v-dialog v-model="addDialog" width="400">
+            <v-card>
+                <v-card-title>添加用例</v-card-title>
+                <v-card-text>
+                    <v-select v-model="selectType" :items="items" label="选择用例类型"></v-select>
+                    <v-text-field v-model="caseName" label="用例名称"></v-text-field>
+                    <v-textarea v-if="selectType==1" v-model="caseData" label="输入文本信息"></v-textarea>
+                    <v-file-input v-if="selectType==2" v-model="file" label="选择文件"></v-file-input>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="close()">取消</v-btn>
+                    <v-btn color="primary" @click="addCase()">确认</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="editDialog" width="400">
+            <v-card>
+                <v-card-title>修改</v-card-title>
+                <v-card-text>
+                    <v-select v-model="selectType" :items="items" label="选择用例类型"></v-select>
+                    <v-text-field v-model="caseName" label="用例名称"></v-text-field>
+                    <v-textarea v-if="selectType==1" v-model="caseData" label="输入文本信息"></v-textarea>
+                    <v-file-input v-if="selectType==2" v-model="file" label="选择文件"></v-file-input>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="close()">取消</v-btn>
+                    <v-btn color="primary" @click="submitEdit()">确认</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <v-btn color="success" @click="addDialog=true">添加用例</v-btn>
         <v-btn color="primary" @click="taskDialog=true">生成任务</v-btn>
         <v-dialog v-model="taskDialog" width="400px">
             <v-card>
@@ -27,6 +59,7 @@
         hide-default-footer
         >
             <template v-slot:item.action="{item}">
+                <v-btn small color="primary" @click="editItem(item)">修改</v-btn>
                 <v-btn small color="error" @click="deleteItem(item)">删除</v-btn>
             </template>
         </v-data-table>
@@ -38,6 +71,16 @@
 export default {
     data(){
         return {
+            file:null,
+            editDialog:false,
+            caseData:'',
+            caseData:'',
+            selectType:1,
+            items:[
+                {text:'文本',value:1},
+                {text:'文件',value:2}
+            ],
+            addDialog:'',
             currentPage:1,
             pageLength:0,
             rows:'',
@@ -48,9 +91,8 @@ export default {
             selected:[],
             headers:[
                 {text:'标识',value:'caseSign'},
-                {text:'包名',value:'packageName'},
-                {text:'类名',value:'className   '},
-                {text:'方法名',value:'methodName'},
+                {text:'名称',value:'caseData'},
+                {text:'数据',value:'caseName'},
                 {text:'操作',value:'action'}
             ],
             tableData:[
@@ -61,6 +103,93 @@ export default {
         this.getCaseList()
     },
     methods:{
+        editItem(){
+            this.caseName = item.caseName
+            this.caseData = item.caseData
+        },
+        submitEdit(){
+            
+            if(this.selectType==1){
+                let params = {
+                    caseName:this.caseName,
+                    caseData:this.caseData
+                }
+                this.$api.project.editCaseText(params).then(res=>{
+                    
+                    if(this.instanceNotify){
+                        this.instanceNotify.close()
+                    }
+                    this.instanceNotify = this.$notify({
+                        title:'成功',
+                        message:'添加成功',
+                        type:'success'
+                    })
+                    this.close()
+                    this.getCaseList()
+                })
+                
+            }else{
+                let params = new FormData()
+                params.append('file',this.file)
+                params.append('caseData',this.caseData)
+                params.append('caseName',this.caseName)
+
+                this.$api.project.editCaseFile(params).then(res=>{
+                    
+                    if(this.instanceNotify){
+                        this.instanceNotify.close()
+                    }
+                    this.instanceNotify = this.$notify({
+                        title:'成功',
+                        message:'添加成功',
+                        type:'success'
+                    })
+                    this.close()
+                    this.getCaseList()
+                })
+            }
+        },
+        addCase(){
+            if(this.selectType==1){
+                let params = {
+                    caseName:this.caseName,
+                    caseData:this.caseData
+                }
+                this.$api.project.addCaseText(params).then(res=>{
+                    
+                    if(this.instanceNotify){
+                        this.instanceNotify.close()
+                    }
+                    this.instanceNotify = this.$notify({
+                        title:'成功',
+                        message:'添加成功',
+                        type:'success'
+                    })
+                    this.close()
+                    this.getCaseList()
+                })
+                
+            }else{
+                let params = new FormData()
+                params.append('file',this.file)
+                params.append('caseData',this.caseData)
+                params.append('caseName',this.caseName)
+
+                this.$api.project.addCaseFile(params).then(res=>{
+                    
+                    if(this.instanceNotify){
+                        this.instanceNotify.close()
+                    }
+                    this.instanceNotify = this.$notify({
+                        title:'成功',
+                        message:'添加成功',
+                        type:'success'
+                    })
+                    this.close()
+                    this.getCaseList()
+                })
+            }
+        },
         createCase(){
             this.$api.project.createCase().then(res=>{
                 console.log(res)
@@ -126,6 +255,8 @@ export default {
         },
         close(){
             this.taskDialog = false
+            this.addDialog = false
+            this.editDialog = false
         }
     }
 }

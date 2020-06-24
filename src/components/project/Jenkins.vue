@@ -20,8 +20,10 @@
                     <v-text-field v-model="jenkinsURL" label="jenkins地址"></v-text-field>
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
                     <v-text-field v-model="jenkinsPassword" label="jenkins密码"></v-text-field>
-                    <v-text-field v-model="gitURL" label="git地址"></v-text-field>
-                    <v-text-field v-model="gitBranch" label="git分支"></v-text-field>
+                    <v-select v-model="commandRunCaseType " :items="runType" label="类型"></v-select>
+                    <v-text-field v-model="commandRunCasSuffix " label="后缀名"></v-text-field>
+                    <!-- <v-text-field v-model="gitURL" label="git地址"></v-text-field>
+                    <v-text-field v-model="gitBranch" label="git分支"></v-text-field> -->
                     <v-text-field v-model="remark" label="备注"></v-text-field>
                     <v-checkbox v-model="defaultJenkinsFlag" label="默认"></v-checkbox>
                 </v-card-text>
@@ -42,8 +44,10 @@
                     <v-text-field v-model="jenkinsURL" label="jenkins地址"></v-text-field>
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
                     <v-text-field v-model="jenkinsPassword" type="password" label="jenkins密码"></v-text-field>
-                    <v-text-field v-model="gitURL" label="git地址"></v-text-field>
-                    <v-text-field v-model="gitBranch" label="git分支"></v-text-field>
+                    <v-select v-model="commandRunCaseType " :items="runType" label="类型"></v-select>
+                    <v-text-field v-model="commandRunCasSuffix " label="后缀名"></v-text-field>
+                    <!-- <v-text-field v-model="gitURL" label="git地址"></v-text-field>
+                    <v-text-field v-model="gitBranch" label="git分支"></v-text-field> -->
                     <v-text-field v-model="remark" label="备注"></v-text-field>
                     <v-checkbox v-model="defaultJenkinsFlag" label="默认"></v-checkbox>
                 </v-card-text>
@@ -61,6 +65,12 @@
 export default {
     data(){
         return {
+            runType:[
+                {text:'文本',value:1},
+                {text:'文件',value:2}
+            ],
+            commandRunCaseType:'',
+            commandRunCasSuffix:'',
             defaultJenkinsFlag:'',
             editDialog:false,
             editId:'',
@@ -98,13 +108,13 @@ export default {
         editJenkins(item){
             this.jenkinsName = item.name
             this.jenkinsCommand = item.testCommand
-            this.gitURL = item.gitUrl
-            this.gitBranch = item.gitBranch
             this.jenkinsURL = item.url
             this.jenkinsUsername = item.userName
             this.jenkinsPassword = item.password
             this.editId = item.id
             this.remark = item.remark
+            this.commandRunCaseType = item.commandRunCaseType
+            this.commandRunCasSuffix = item.commandRunCasSuffix
             this.editDialog = true
         },
         deleteJenkins(item){
@@ -121,9 +131,9 @@ export default {
 
             let params = {
                 id:this.editId,
-                gitBranch:this.gitBranch,
-                gitUrl:this.gitURL,
                 name:this.jenkinsName,
+                commandRunCaseType:this.commandRunCaseType,
+                commandRunCasSuffix:this.commandRunCasSuffix,
                 password:this.jenkinsPassword,
                 remark:this.remark,
                 testCommand:this.jenkinsCommand,
@@ -140,7 +150,8 @@ export default {
         },
         saveJenkins(){
             let params = {
-                
+                commandRunCaseType:this.commandRunCaseType,
+                commandRunCasSuffix:this.commandRunCasSuffix,
                 gitBranch:this.gitBranch,
                 gitUrl:this.gitURL,
                 name:this.jenkinsName,

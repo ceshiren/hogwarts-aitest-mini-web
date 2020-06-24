@@ -1,6 +1,16 @@
 import axios from './http'
 
 const project = {
+    addCaseText(params){
+        return axios.post('/testCase/text',params)
+    },
+    addCaseFile(params){
+        return axios('/testCase/file',{
+            method:post,
+            data:params,
+            headers:{'Content-type':'multipart/form-data'}
+        })
+    },
     createCase(params){
         return axios.post('/user/createCase',params)
     },

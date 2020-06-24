@@ -29,6 +29,17 @@
                 <div v-else-if="item.status==2">执行中</div>
                 <div v-else-if="item.status==3"><a @click="getAllure(item)">执行完成</a></div>
             </template>
+
+          <template v-slot:item.shortTestCommand="{item}">
+            <v-hover v-slot:default="{hover}">
+              <div>
+                <span class="short-test-command">{{item.shortTestCommand}}</span>
+                <div v-if="hover" class=" transition-fast-in-fast-out grey v-card--reveal test-command">
+                  {{item.testCommand}}
+                </div>
+              </div>
+            </v-hover>
+          </template>
             
             <template v-slot:item.action="{item}">
                 <v-btn v-if="item.status==1" color="primary" small @click="doTask(item)">执行任务</v-btn>
@@ -58,16 +69,16 @@ export default {
             headers:[
                 {text:'id',value:'id'},
                 {text:'名称',value:'name'},
-                {text:'JenkinsID',value:'base_jenkins_id'},
-                {text:'用例数量',value:'case_count'},
-                {text:'执行脚本',value:'test_command'},
+                {text:'JenkinsID',value:'testJenkinsId'},
+                {text:'用例数量',value:'caseConut'},
+                {text:'执行脚本',value:'shortTestCommand'},
                 {text:'执行状态',value:'status'},
                 {text:'操作',value:'action'}
             ],
             tableData:[
                 {
                     id:1,
-                    name:'tesk'
+                    name:'task'
                 }
             ]
         }
@@ -120,16 +131,26 @@ export default {
             this.$api.project.getTaskList(params).then(res=>{
                 console.log(res)
                 this.tableData = res.data.data.data
+                for(let i = 0; i < this.tableData.length; i++){
+                  if(this.tableData[i].testCommand == undefined) {
+                    continue;
+                  }
+                  if(this.tableData[i].testCommand.length > 10){
+                    this.tableData[i].shortTestCommand = this.tableData[i].testCommand.substring(0,20);
+                  }
+                }
+
                 this.rows = res.data.data.recordsTotal
                 this.pageLength = Math.ceil(this.rows/10)
             })
         },
         doTask(item){
             let params = {
-                id:item.id
+                taskId:item.id
             }
             this.$api.project.doTask(params).then(res=>{
                 if(res.data.resultCode==1){
+                    this.getTaskList()
                     if(this.instanceNotify){
                         this.instanceNotify.close()
                     }
@@ -165,3 +186,25 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+
+.v-card--reveal {
+  align-items: center;
+  font-size: 14px;
+  margin-left: -50px;
+  justify-content: center;
+  opacity: .8;
+  position: absolute;
+  width: 100%;
+}
+
+.test-command{
+  color: #fff;
+  border-radius: 5px;
+}
+.short-test-command{
+  cursor: pointer;
+}
+
+</style>

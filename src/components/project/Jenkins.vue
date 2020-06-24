@@ -76,9 +76,10 @@ export default {
             editId:'',
             addDialog:false,
             headers:[
+                {text:'id',value:'id'},
                 {text:'jenkins名称',value:'name'},
                 {text:'测试命令 ',value:'testCommand'},
-                {text:'git地址',vlaue:'gitUrl'},
+                {text:'git地址',value:'gitUrl'},
                 {text:'git分支',value:'gitBranch'},
                 {text:'jenkins地址',value:'url'},
                 {text:'操作',value:'action'}

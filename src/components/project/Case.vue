@@ -90,6 +90,7 @@ export default {
             remark:'',
             selected:[],
             headers:[
+                {text:'id',value:'id'},
                 {text:'标识',value:'caseSign'},
                 {text:'名称',value:'caseData'},
                 {text:'数据',value:'caseName'},

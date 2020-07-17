@@ -10,7 +10,7 @@ var instance = axios.create({
         'Content-Type':'application/json',
     },
     baseURL:api,
-    timeout:10000,
+    timeout:100000,
 })
 
 

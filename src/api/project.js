@@ -6,7 +6,7 @@ const project = {
     },
     addCaseFile(params){
         return axios('/testCase/file',{
-            method:post,
+            method:'post',
             data:params,
             headers:{'Content-type':'multipart/form-data'}
         })
@@ -14,11 +14,11 @@ const project = {
     createCase(params){
         return axios.post('/user/createCase',params)
     },
-    getProjectInfo(params){
-        return axios.get('/peoject',{params})
-    },
+    /*getProjectInfo(params){
+        return axios.get('/jenkins',{params})
+    },*/
     editJenkins(params){
-        return axios.post('/project',params)
+        return axios.put('/jenkins',params)
     },
     getCase(params){
         return axios.get('/testCase/list',{params})
@@ -28,9 +28,6 @@ const project = {
     },
     getJenkinsList(params){
         return axios.get('/jenkins/list',{params})
-    },
-    editJenkins(params){
-        return axios.put('/jenkins',params)
     },
     deleteJenkins(params){
         return axios.delete('/jenkins/'+params.id)

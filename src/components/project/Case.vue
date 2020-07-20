@@ -51,9 +51,9 @@
             </v-card>
         </v-dialog>
 
-        <v-data-table 
-        v-model="selected" 
-        :headers="headers" 
+        <v-data-table
+        v-model="selected"
+        :headers="headers"
         :items="tableData"
         show-select
         hide-default-footer
@@ -91,9 +91,8 @@ export default {
             selected:[],
             headers:[
                 {text:'id',value:'id'},
-                {text:'标识',value:'caseSign'},
-                {text:'名称',value:'caseData'},
-                {text:'数据',value:'caseName'},
+                {text:'名称',value:'caseName'},
+                {text:'数据',value:'caseData'},
                 {text:'操作',value:'action'}
             ],
             tableData:[
@@ -109,14 +108,14 @@ export default {
             this.caseData = item.caseData
         },
         submitEdit(){
-            
+
             if(this.selectType==1){
                 let params = {
                     caseName:this.caseName,
                     caseData:this.caseData
                 }
                 this.$api.project.editCaseText(params).then(res=>{
-                    
+
                     if(this.instanceNotify){
                         this.instanceNotify.close()
                     }
@@ -128,7 +127,7 @@ export default {
                     this.close()
                     this.getCaseList()
                 })
-                
+
             }else{
                 let params = new FormData()
                 params.append('file',this.file)
@@ -136,7 +135,7 @@ export default {
                 params.append('caseName',this.caseName)
 
                 this.$api.project.editCaseFile(params).then(res=>{
-                    
+
                     if(this.instanceNotify){
                         this.instanceNotify.close()
                     }
@@ -157,7 +156,7 @@ export default {
                     caseData:this.caseData
                 }
                 this.$api.project.addCaseText(params).then(res=>{
-                    
+
                     if(this.instanceNotify){
                         this.instanceNotify.close()
                     }
@@ -169,15 +168,15 @@ export default {
                     this.close()
                     this.getCaseList()
                 })
-                
+
             }else{
                 let params = new FormData()
-                params.append('file',this.file)
+                params.append('caseFile',this.file)
                 params.append('caseData',this.caseData)
                 params.append('caseName',this.caseName)
 
                 this.$api.project.addCaseFile(params).then(res=>{
-                    
+
                     if(this.instanceNotify){
                         this.instanceNotify.close()
                     }
@@ -207,7 +206,7 @@ export default {
             })
         },
         getCaseList(){
-            
+
             let params = {
                 pageNum:this.currentPage,
                 pageSize:10,

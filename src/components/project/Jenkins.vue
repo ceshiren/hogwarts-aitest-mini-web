@@ -44,8 +44,8 @@
                     <v-text-field v-model="jenkinsURL" label="jenkins地址"></v-text-field>
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
                     <v-text-field v-model="jenkinsPassword" type="password" label="jenkins密码"></v-text-field>
-                    <v-select v-model="commandRunCaseType " :items="runType" label="类型"></v-select>
-                    <v-text-field v-model="commandRunCasSuffix " label="后缀名"></v-text-field>
+                    <v-select v-model="commandRunCaseType " :items="runType" label="测试用例类型"></v-select>
+                    <v-text-field v-model="commandRunCasSuffix " label="测试用例后缀名"></v-text-field>
                     <!-- <v-text-field v-model="gitURL" label="git地址"></v-text-field>
                     <v-text-field v-model="gitBranch" label="git分支"></v-text-field> -->
                     <v-text-field v-model="remark" label="备注"></v-text-field>
@@ -59,7 +59,7 @@
             </v-card>
         </v-dialog>
     </div>
-</template>     
+</template>
 
 <script>
 export default {
@@ -175,6 +175,6 @@ export default {
             this.editDialog = false
         }
     }
-    
+
 }
 </script>

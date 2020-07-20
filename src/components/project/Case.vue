@@ -72,6 +72,7 @@ export default {
     data(){
         return {
             file:null,
+            caseName:'',
             editDialog:false,
             caseData:'',
             caseData:'',
@@ -111,6 +112,7 @@ export default {
         submitEdit(){
             
             if(this.selectType==1){
+                console.log('文本')
                 let params = {
                     caseName:this.caseName,
                     caseData:this.caseData
@@ -130,6 +132,7 @@ export default {
                 })
                 
             }else{
+                console.log('文件')
                 let params = new FormData()
                 params.append('file',this.file)
                 params.append('caseData',this.caseData)

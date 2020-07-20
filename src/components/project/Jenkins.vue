@@ -5,6 +5,10 @@
         :headers="headers"
         :items="jenkinsData"
         hide-default-footer>
+        <template v-slot:item.commandRunCaseType="{item}">
+            <div v-if="item.commandRunCaseType==1">文本</div>
+            <div v-if="item.commandRunCaseType==2">文件</div>
+        </template>
         <template v-slot:item.action="{item}">
             <v-btn color="success" small @click="editJenkins(item)">编辑</v-btn>
             <v-btn color="error" small @click="deleteJenkins(item)">删除</v-btn>

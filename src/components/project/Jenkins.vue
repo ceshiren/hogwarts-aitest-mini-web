@@ -44,8 +44,8 @@
                     <v-text-field v-model="jenkinsURL" label="jenkins地址"></v-text-field>
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
                     <v-text-field v-model="jenkinsPassword" type="password" label="jenkins密码"></v-text-field>
-                    <v-select v-model="commandRunCaseType " :items="runType" label="类型"></v-select>
-                    <v-text-field v-model="commandRunCasSuffix " label="后缀名"></v-text-field>
+                    <v-select v-model="commandRunCaseType " :items="runType" label="测试用例类型"></v-select>
+                    <v-text-field v-model="commandRunCasSuffix " label="测试用例后缀名"></v-text-field>
                     <!-- <v-text-field v-model="gitURL" label="git地址"></v-text-field>
                     <v-text-field v-model="gitBranch" label="git分支"></v-text-field> -->
                     <v-text-field v-model="remark" label="备注"></v-text-field>
@@ -59,7 +59,7 @@
             </v-card>
         </v-dialog>
     </div>
-</template>     
+</template>
 
 <script>
 export default {
@@ -79,9 +79,9 @@ export default {
                 {text:'id',value:'id'},
                 {text:'jenkins名称',value:'name'},
                 {text:'测试命令 ',value:'testCommand'},
-                {text:'git地址',value:'gitUrl'},
-                {text:'git分支',value:'gitBranch'},
                 {text:'jenkins地址',value:'url'},
+                {text:'测试用例类型',value:'commandRunCaseType'},
+                {text:'测试用例文件后缀',value:'commandRunCasSuffix'},
                 {text:'操作',value:'action'}
             ],
             jenkinsData:[],
@@ -107,12 +107,12 @@ export default {
             })
         },
         editJenkins(item){
+            this.editId = item.id
             this.jenkinsName = item.name
             this.jenkinsCommand = item.testCommand
             this.jenkinsURL = item.url
             this.jenkinsUsername = item.userName
             this.jenkinsPassword = item.password
-            this.editId = item.id
             this.remark = item.remark
             this.commandRunCaseType = item.commandRunCaseType
             this.commandRunCasSuffix = item.commandRunCasSuffix
@@ -175,6 +175,6 @@ export default {
             this.editDialog = false
         }
     }
-    
+
 }
 </script>

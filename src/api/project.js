@@ -14,6 +14,9 @@ const project = {
     createCase(params){
         return axios.post('/user/createCase',params)
     },
+    editCase(params){
+      return axios.put('/testCase/',params)
+    },
     /*getProjectInfo(params){
         return axios.get('/jenkins',{params})
     },*/

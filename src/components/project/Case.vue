@@ -20,7 +20,6 @@
             <v-card>
                 <v-card-title>修改</v-card-title>
                 <v-card-text>
-                    <v-select v-model="selectType" :items="items" label="选择用例类型"></v-select>
                     <v-text-field v-model="caseName" label="用例名称"></v-text-field>
                     <v-textarea v-if="selectType==1" v-model="caseData" label="输入文本信息"></v-textarea>
                     <v-file-input v-if="selectType==2" v-model="file" label="选择文件"></v-file-input>
@@ -73,7 +72,8 @@ export default {
         return {
             file:null,
             editDialog:false,
-            caseData:'',
+            editId:'',
+            caseName:'',
             caseData:'',
             selectType:1,
             items:[
@@ -103,51 +103,31 @@ export default {
         this.getCaseList()
     },
     methods:{
-        editItem(){
+        editItem(item){
+            this.editId = item.id
             this.caseName = item.caseName
             this.caseData = item.caseData
+            this.editDialog = true
         },
         submitEdit(){
+              let params = {
+                  id:this.editId,
+                  caseName:this.caseName,
+                  caseData:this.caseData
+              }
+              this.$api.project.editCase(params).then(res=>{
 
-            if(this.selectType==1){
-                let params = {
-                    caseName:this.caseName,
-                    caseData:this.caseData
-                }
-                this.$api.project.editCaseText(params).then(res=>{
-
-                    if(this.instanceNotify){
-                        this.instanceNotify.close()
-                    }
-                    this.instanceNotify = this.$notify({
-                        title:'成功',
-                        message:'添加成功',
-                        type:'success'
-                    })
-                    this.close()
-                    this.getCaseList()
-                })
-
-            }else{
-                let params = new FormData()
-                params.append('file',this.file)
-                params.append('caseData',this.caseData)
-                params.append('caseName',this.caseName)
-
-                this.$api.project.editCaseFile(params).then(res=>{
-
-                    if(this.instanceNotify){
-                        this.instanceNotify.close()
-                    }
-                    this.instanceNotify = this.$notify({
-                        title:'成功',
-                        message:'添加成功',
-                        type:'success'
-                    })
-                    this.close()
-                    this.getCaseList()
-                })
-            }
+                  if(this.instanceNotify){
+                      this.instanceNotify.close()
+                  }
+                  this.instanceNotify = this.$notify({
+                      title:'成功',
+                      message:'修改成功',
+                      type:'success'
+                  })
+                  this.close()
+                  this.getCaseList()
+              })
         },
         addCase(){
             if(this.selectType==1){

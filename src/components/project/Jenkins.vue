@@ -79,9 +79,9 @@ export default {
                 {text:'id',value:'id'},
                 {text:'jenkins名称',value:'name'},
                 {text:'测试命令 ',value:'testCommand'},
-                {text:'git地址',value:'gitUrl'},
-                {text:'git分支',value:'gitBranch'},
                 {text:'jenkins地址',value:'url'},
+                {text:'测试用例类型',value:'commandRunCaseType'},
+                {text:'测试用例文件后缀',value:'commandRunCasSuffix'},
                 {text:'操作',value:'action'}
             ],
             jenkinsData:[],
@@ -107,12 +107,12 @@ export default {
             })
         },
         editJenkins(item){
+            this.editId = item.id
             this.jenkinsName = item.name
             this.jenkinsCommand = item.testCommand
             this.jenkinsURL = item.url
             this.jenkinsUsername = item.userName
             this.jenkinsPassword = item.password
-            this.editId = item.id
             this.remark = item.remark
             this.commandRunCaseType = item.commandRunCaseType
             this.commandRunCasSuffix = item.commandRunCasSuffix

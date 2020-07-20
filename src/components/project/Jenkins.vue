@@ -10,9 +10,13 @@
             <div v-if="item.commandRunCaseType==2">文件</div>
         </template>
         <template v-slot:item.action="{item}">
-            <v-btn color="success" small @click="editJenkins(item)">编辑</v-btn>
-            <v-btn color="error" small @click="deleteJenkins(item)">删除</v-btn>
+          <v-btn color="success" small @click="editJenkins(item)">编辑</v-btn>
+          <v-btn color="error" small @click="deleteJenkins(item)">删除</v-btn>
         </template>
+          <template v-slot:item.defaultJenkinsFlag="{item}">
+            <div v-if="item.defaultJenkinsFlag==1">是</div>
+            <div v-if="item.defaultJenkinsFlag==0">否</div>
+          </template>
         </v-data-table>
 
         <v-dialog v-model="editDialog" width="500px">
@@ -25,7 +29,7 @@
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
                     <v-text-field v-model="jenkinsPassword" label="jenkins密码"></v-text-field>
                     <v-select v-model="commandRunCaseType " :items="runType" label="类型"></v-select>
-                    <v-text-field v-model="commandRunCasSuffix " label="后缀名"></v-text-field>
+                    <v-text-field v-model="commandRunCaseSuffix " label="后缀名"></v-text-field>
                     <!-- <v-text-field v-model="gitURL" label="git地址"></v-text-field>
                     <v-text-field v-model="gitBranch" label="git分支"></v-text-field> -->
                     <v-text-field v-model="remark" label="备注"></v-text-field>
@@ -49,7 +53,7 @@
                     <v-text-field v-model="jenkinsUsername" label="jenkins用户名"></v-text-field>
                     <v-text-field v-model="jenkinsPassword" type="password" label="jenkins密码"></v-text-field>
                     <v-select v-model="commandRunCaseType " :items="runType" label="测试用例类型"></v-select>
-                    <v-text-field v-model="commandRunCasSuffix " label="测试用例后缀名"></v-text-field>
+                    <v-text-field v-model="commandRunCaseSuffix " label="测试用例后缀名"></v-text-field>
                     <!-- <v-text-field v-model="gitURL" label="git地址"></v-text-field>
                     <v-text-field v-model="gitBranch" label="git分支"></v-text-field> -->
                     <v-text-field v-model="remark" label="备注"></v-text-field>
@@ -74,7 +78,7 @@ export default {
                 {text:'文件',value:2}
             ],
             commandRunCaseType:'',
-            commandRunCasSuffix:'',
+            commandRunCaseSuffix:'',
             defaultJenkinsFlag:'',
             editDialog:false,
             editId:'',
@@ -85,7 +89,8 @@ export default {
                 {text:'测试命令 ',value:'testCommand'},
                 {text:'jenkins地址',value:'url'},
                 {text:'测试用例类型',value:'commandRunCaseType'},
-                {text:'测试用例文件后缀',value:'commandRunCasSuffix'},
+                {text:'测试用例文件后缀',value:'commandRunCaseSuffix'},
+                {text:'是否为默认',value:'defaultJenkinsFlag'},
                 {text:'操作',value:'action'}
             ],
             jenkinsData:[],
@@ -119,7 +124,7 @@ export default {
             this.jenkinsPassword = item.password
             this.remark = item.remark
             this.commandRunCaseType = item.commandRunCaseType
-            this.commandRunCasSuffix = item.commandRunCasSuffix
+            this.commandRunCaseSuffix = item.commandRunCaseSuffix
             this.editDialog = true
         },
         deleteJenkins(item){
@@ -138,7 +143,7 @@ export default {
                 id:this.editId,
                 name:this.jenkinsName,
                 commandRunCaseType:this.commandRunCaseType,
-                commandRunCasSuffix:this.commandRunCasSuffix,
+                commandRunCaseSuffix:this.commandRunCaseSuffix,
                 password:this.jenkinsPassword,
                 remark:this.remark,
                 testCommand:this.jenkinsCommand,
@@ -156,7 +161,7 @@ export default {
         saveJenkins(){
             let params = {
                 commandRunCaseType:this.commandRunCaseType,
-                commandRunCasSuffix:this.commandRunCasSuffix,
+                commandRunCaseSuffix:this.commandRunCaseSuffix,
                 gitBranch:this.gitBranch,
                 gitUrl:this.gitURL,
                 name:this.jenkinsName,

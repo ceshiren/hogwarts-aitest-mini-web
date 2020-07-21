@@ -20,6 +20,11 @@ export default new Router({
       component:resolve=>require(["@/components/user/SignIn"],resolve)
     },
     {
+      path:'/MapLocal',
+      name:'MapLocal',
+      component:resolve=>require(["@/components/mapLocal/MapLocal"],resolve)
+    },
+    {
       path:'/SignUp',
       name:'SignUp',
       component:resolve=>require(["@/components/user/SignUp"],resolve)

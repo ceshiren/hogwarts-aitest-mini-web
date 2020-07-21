@@ -3,8 +3,8 @@
     <div id="input">
         <v-text-field label="请输入参数" v-model="param"></v-text-field>
     </div>
-    <v-btn @click="search" style="float:left;margin:35px 0px" color="primary">查询</v-btn>
-    <v-textarea v-model="data" auto-grow label="查询结果:" readonly rows="3" class="data"></v-textarea>
+    <v-btn @click="search" class="button" color="primary">查询</v-btn>
+    <v-textarea v-model="data" auto-grow readonly rows="3" class="data" placeholder="查询结果："></v-textarea>
 </div>
     
 
@@ -39,12 +39,20 @@ export default {
 <style scope>
     #input{
         width: 200px;
-        margin: 20px 50px;
-        float: left;
+        position: absolute;
+        top: 20px;
+        left: 50px;
     }
     .data{
-        display: block;
+        /* display: block; */
         width: 500px;
-        margin: 150px 50px;
+        position: absolute;
+        top: 120px;
+        left: 50px;
+    }
+    .button{
+        position: absolute;
+        top: 35px;
+        left: 300px;
     }
 </style>

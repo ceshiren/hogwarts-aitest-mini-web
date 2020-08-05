@@ -1,5 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import SignIn from '@/components/user/SignIn'
+import MapLocal from '@/components/mapLocal/MapLocal'
+import SignUp from '@/components/user/SignUp'
+import Home from '@/components/project/ProjectNav'
+import Jenkins from '@/components/project/Jenkins'
+import Case from '@/components/project/Case'
+import Task from '@/components/project/Task'
+import Report from '@/components/project/Report'
+
 // import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
@@ -17,41 +26,41 @@ export default new Router({
     {
       path:'/',
       name:'SignIn',
-      component:resolve=>require(["@/components/user/SignIn"],resolve)
+      component:SignIn
     },
     {
       path:'/MapLocal',
       name:'MapLocal',
-      component:resolve=>require(["@/components/mapLocal/MapLocal"],resolve)
+      component:MapLocal
     },
     {
       path:'/SignUp',
       name:'SignUp',
-      component:resolve=>require(["@/components/user/SignUp"],resolve)
+      component:SignUp
     },
     {
       path:'/home',
-      component:resolve=>require(["@/components/project/ProjectNav"],resolve),
+      component:Home,
       children:[
         {
           path:'jenkins',
           name:'Jenkins',
-          component:resolve=>require(["@/components/project/Jenkins"],resolve)
+          component:Jenkins
         },
         {
           path:'case',
           name:'Case',
-          component:resolve=>require(["@/components/project/Case"],resolve)
+          component:Case
         },
         {
           path:'task',
           name:'Task',
-          component:resolve=>require(["@/components/project/Task"],resolve)
+          component:Task
         },
         {
           path:'report',
           name:'Report',
-          component:resolve=>require(["@/components/project/Report"],resolve)
+          component:Report
         }
       ]
     }

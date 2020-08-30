@@ -40,7 +40,7 @@
               </div>
             </v-hover>
           </template>
-            
+
             <template v-slot:item.action="{item}">
                 <v-btn v-if="item.status==1" color="primary" small @click="doTask(item)">执行任务</v-btn>
 
@@ -70,7 +70,7 @@ export default {
                 {text:'id',value:'id'},
                 {text:'名称',value:'name'},
                 {text:'JenkinsID',value:'testJenkinsId'},
-                {text:'用例数量',value:'caseConut'},
+                {text:'用例数量',value:'caseCount'},
                 {text:'执行脚本',value:'shortTestCommand'},
                 {text:'执行状态',value:'status'},
                 {text:'操作',value:'action'}

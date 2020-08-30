@@ -25,7 +25,7 @@ export default {
             listData = res.data.data
             for(let i=0;i<listData.length;i++){
                 this.countX.push("任务id:"+listData[i].id)
-                this.coutnData.push(listData[i].caseConut)
+                this.coutnData.push(listData[i].caseCount)
             }
             this.drawChart()
         })
@@ -34,7 +34,7 @@ export default {
             console.log(res)
             var listData = res.data.data.taskDataDtoList
             console.log(listData)
-            
+
             for(let i=0;i<listData.length;i++){
                 this.statusX.push(listData[i].desc)
                 this.statusData.push({value:listData[i].taskCount,name:listData[i].desc})
